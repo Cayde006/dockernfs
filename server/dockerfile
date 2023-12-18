@@ -1,0 +1,18 @@
+# image alpine 
+FROM alpine:latest
+
+#à modifier pour k8s
+VOLUME [ "/tmp/nfsServer" ]
+
+#install du nfs server
+RUN apk update\
+&& apk --no-cache add nfs-utils \
+#création du répertoire partagé.
+&& mkdir -p /partage
+
+#réseaux 
+EXPOSE 2049
+
+#fichier de conf
+COPY exports /etc/exports
+#lancement du conteneur
